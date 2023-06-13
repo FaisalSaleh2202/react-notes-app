@@ -4,22 +4,20 @@ import { showFormattedDate } from '../utils/index';
 import PropTypes from 'prop-types';
 
 function NoteItem({ title, body, createdAt, id, archived, owner }) {
+  const randColorArray = ['#F2BE22', '#00DFA2', '#00C4FF', 'FF78C4', 'FFE569'];
 
   const randColor = () => {
     return (
-      '#' +
-      Math.floor(Math.random() * 16777215)
-        .toString(16)
-        .padStart(6, '0')
-        .toUpperCase()
+      randColorArray[Math.floor(Math.random() * randColorArray.length)] ||
+      '#F2BE22'
     );
   };
-  
+
   return (
     <div
       className='note-item'
-      style={{ backgroundColor: randColor() }}
-      key={id}>
+      key={id}
+    >
       <h3 className='note-item__title'>
         <Link to={`/notes/${id}`}>{title}</Link>{' '}
       </h3>

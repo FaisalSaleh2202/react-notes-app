@@ -56,6 +56,12 @@ header span {
   margin-left: 8px;
 }
 
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header .navigation ul li {
   display: inline-block;
   font-size: 24px;
@@ -282,6 +288,34 @@ main {
   cursor: pointer;
   color: var(--on-background);
   margin-left: 12px;
+}
+
+@media screen and (max-width: 650px) {
+  .homepage__action {
+    bottom: 62px;
+  }
+  header h1 {
+    font-size: 22px;
+  }
+
+  .toggle-locale,
+  .toggle-theme,
+  .navigation ul {
+    /* display: none; */
+    font-size: 22px;
+  }
+
+  .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+  }
+
+  .toggle-locale img {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @media screen and (min-width: 650px) {

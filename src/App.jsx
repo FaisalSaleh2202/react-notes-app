@@ -12,6 +12,7 @@ import { putAccessToken, getUserLogged } from './utils/network-data';
 import ThemeContext from './contexts/ThemeContext';
 import LocaleContext from './contexts/LocaleContext';
 import { FaMoon, FaSun } from 'react-icons/fa';
+import { BiMenu } from 'react-icons/bi';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,13 +21,14 @@ class App extends React.Component {
     this.state = {
       authedUser: null,
       initializing: true,
+      toggleMenu: false,
     };
     this.state = {
       theme: localStorage.getItem('theme') || 'light',
       toggleTheme: () => {
         console.log('theme');
 
-        this.setState(prevState => {
+        this.setState((prevState) => {
           // mendapatkan nilai tema baru berdasarkan state sebelumnya
           const newTheme = prevState.theme === 'light' ? 'dark' : 'light';
           // menyimpan nilai tema baru ke local storage
@@ -41,7 +43,7 @@ class App extends React.Component {
       locale: localStorage.getItem('locale') || 'en',
       toggleLocale: () => {
         console.log('locale');
-        this.setState(prevState => {
+        this.setState((prevState) => {
           const newLocale = prevState.locale === 'id' ? 'en' : 'id';
           localStorage.setItem('locale', newLocale);
           return {
@@ -49,10 +51,13 @@ class App extends React.Component {
           };
         });
       },
+
+      colorNote: localStorage.getItem('colorNote'),
     };
 
     this.onLoginSuccess = this.onLoginSuccess.bind(this);
     this.onLogout = this.onLogout.bind(this);
+    this.onToggleMenu = this.onToggleMenu.bind(this);
   }
 
   async componentDidMount() {
@@ -95,6 +100,21 @@ class App extends React.Component {
     putAccessToken('');
   }
 
+  onToggleMenu() {
+    this.setState(() => {
+      if (!this.state.toggleMenu) {
+        return {
+          toggleMenu: true,
+        };
+      } else {
+        return {
+          toggleMenu: false,
+        };
+      }
+    });
+    console.log('tes');
+  }
+
   render() {
     if (this.state.initializing) {
       return null;
@@ -114,7 +134,8 @@ class App extends React.Component {
               </h1>
               <button
                 className='toggle-locale'
-                onClick={this.state.toggleLocale}>
+                onClick={this.state.toggleLocale}
+              >
                 {this.state.locale == 'id' ? 'en' : 'id'}
               </button>
               <button className='toggle-theme' onClick={this.state.toggleTheme}>
@@ -155,12 +176,10 @@ class App extends React.Component {
                       ? 'Aplikasi Catatan'
                       : 'Notes App'}
                   </Link>
-                  <span>
-                    {this.state.authedUser ? this.state.authedUser.name : ''}
-                  </span>
                 </h1>
                 <Navigation logout={this.onLogout} />
               </header>
+              {this.state.toggleMenu && <h1>Hello World</h1>}
               <main>
                 <Routes>
                   <Route path='/' element={<HomePage />} />
